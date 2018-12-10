@@ -16,14 +16,16 @@ class Claim:
         self.x2 = int(width) + self.x1
         self.y1 = int(top_margin)
         self.y2 = int(height) + self.y1
+        self.overlap = False
 
 
     def __repr__(self):
-        return '<Claim ID:{}, x1:{}, x2:{}, y1:{}, y2:{}>'.format(self.id,
+        return '<Claim ID:{}, x1:{}, x2:{}, y1:{}, y2:{}, overlap:{}>'.format(self.id,
                                                                   self.x1,
                                                                   self.x2,
                                                                   self.y1,
-                                                                  self.y2)
+                                                                  self.y2,
+                                                                              self.overlap)
 
 def _load_input(input_file):
     with open(input_file, 'r') as fp:
@@ -33,14 +35,20 @@ def _process(claims_desc):
     fabric_size=1000
     fabric = [[list() for i in range(fabric_size)]
               for j in range(fabric_size)]
-    claims = [Claim(desc) for desc in claims_desc]
+    claims = {c.id:c for c in [Claim(desc) for desc in claims_desc]}
 
     overlaps = 0
 
-    for claim in claims:
+    for claim_id, claim in claims.items():
         for i in range(claim.x1, claim.x2):
             for j in range(claim.y1, claim.y2):
-                fabric[i][j].append(claim.id)
+                cell = fabric[i][j]
+                cell.append(claim_id)
+                if len(cell) > 1:
+                    for c in cell:
+                        claims[c].overlap=True
+
+    alone = [claims[claim] for claim in claims if claims[claim].overlap is False]
 
     for line in fabric:
         for cell in line:
@@ -48,7 +56,7 @@ def _process(claims_desc):
                 overlaps += 1
 
     print('Result for part one is {}.'.format(overlaps))
-    print('Result for part two is {}.'.format('<TODO>'))
+    print('Result for part two is {}.'.format(alone[0].id))
 
 if __name__ == "__main__":
     _process(_load_input('input'))
