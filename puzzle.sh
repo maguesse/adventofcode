@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-TMPL_DIR=.tmpl
+self="${BASH_SOURCE[0]}"
+selfdir="$(cd "$(dirname "${self}")";pwd)"
+TMPL_DIR=${selfdir}/.tmpl
 YEAR=2019
 days=("" "one" "two" "three" "four" "five" "six"
 "seven" "eight" "nine" "ten" "eleven" "twelve"
