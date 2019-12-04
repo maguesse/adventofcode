@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-TMPL_DIR=tmpl
+TMPL_DIR=.tmpl
 YEAR=2019
-days=("" "one" "two" "three" "four" "five" "six")
+days=("" "one" "two" "three" "four" "five" "six"
+"seven" "eight" "nine" "ten" "eleven" "twelve"
+"thirteen" "fourteen" "fiveteen" "sixteen"
+"seventeen" "heighteen" "nineteen"
+"twenty" "twentyone" "twentytwo" "twentythree" "twentyfour" "twentyfive")
 
 die() {
     echo "ERROR: $@"
@@ -26,13 +30,14 @@ branch_name() {
 }
 
 begin() {
-    [[ -d ${day} ]] && die "Folder for day ${day} already exist!"
+    DAY_FOLDER=${YEAR}/${day}
+    [[ -d ${DAY_FOLDER} ]] && die "Folder for day ${day} already exist!"
     check_branch "master"
     new_branch=$(branch_name)
     git checkout -b ${new_branch}
-    mkdir -p ${day}
-    cp ${TMPL_DIR}/*.py ${day}
-    git add ${day}
+    mkdir -p ${DAY_FOLDER}
+    cp ${TMPL_DIR}/*.py ${DAY_FOLDER}
+    git add ${DAY_FOLDER}
 }
 
 end() {
