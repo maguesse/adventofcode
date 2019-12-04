@@ -30,13 +30,13 @@ branch_name() {
 }
 
 begin() {
-    DAY_FOLDER=${YEAR}/${day}
     [[ -d ${DAY_FOLDER} ]] && die "Folder for day ${day} already exist!"
     check_branch "master"
     new_branch=$(branch_name)
     git checkout -b ${new_branch}
     mkdir -p ${DAY_FOLDER}
-    cp ${TMPL_DIR}/*.py ${DAY_FOLDER}
+    cp ${TMPL_DIR}/main.py ${DAY_FOLDER}
+    ln -s ${TMPL_DIR}/util.py ${DAY_FOLDER}
     git add ${DAY_FOLDER}
 }
 
@@ -82,19 +82,19 @@ save() {
     comment=$1;shift
     comment="Day ${day} - ${comment}"
     # Add and commit unstagged changes
-    if [ -n "$(git ls-files --other --exclude-standard ${day})" ]; then
+    if [ -n "$(git ls-files --other --exclude-standard)" ]; then
         echo "Untracked files found. Do you want to add them ?"
-        for f in $(git ls-files --other --exclude-standard ${day}); do
+        for f in $(git ls-files --other --exclude-standard); do
             add $f
         done
     fi
-    if ! $(git diff --quiet ${day}); then
+    if ! $(git diff --quiet); then
         echo "Unstagged files found."
-        for f in $(git diff --name-only ${day}); do
+        for f in $(git diff --name-only); do
             add $f
         done
     fi
-    if ! $(git diff --quiet --staged ${day}); then
+    if ! $(git diff --quiet --staged); then
         echo "Will commit staged uncommitted files."
         git commit -m "${comment}" || die "Unable to commit"
     fi
@@ -112,6 +112,7 @@ check_branch() {
 doit() {
     action=$1;shift
     day=$1;shift
+    DAY_FOLDER=${YEAR}/${day}
     case ${action} in
         'begin')
             begin
