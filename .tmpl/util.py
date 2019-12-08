@@ -1,9 +1,9 @@
-def load_data(formater=None):
+def load_data(fun=None):
     res = []
     with open('input') as input:
         res = input.read().splitlines()
-    if formater is not None:
-        res = [formater(line) for line in res]
+    if fun is not None:
+        res = [fun(line) for line in res]
     return res
 
 def load_list_of_ints():
