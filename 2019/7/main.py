@@ -7,8 +7,7 @@ NB_PHASES = 4
 NB_AMPS = 5
 
 def amp(index, first, second, prg):
-    insts = [second, first]
-    return intcode.engine(prg, insts)
+    return intcode.IntCode(prg).run([first, second])
 
 def eval_ampsignal(prg, settings):
     instructions = settings[::-1]
@@ -35,6 +34,20 @@ def solve(part2=False):
         print(f'Part1: {part1(data)}')
     else:
         print(f'Part2: {part2(data)}')
+
+class Puzzle:
+
+    def __init__(self):
+        self.data = util.load_data()
+
+    def init_data(self, data):
+        self.data = data
+
+    def solve_part1(self):
+        pass
+
+    def solve_part2(self):
+        pass
 
 if __name__ == '__main__':
     ex1 = [3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0]
