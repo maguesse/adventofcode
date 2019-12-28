@@ -1,12 +1,17 @@
 import main
 
+
+def solve(data):
+    obj = main.Day10(data)
+    return obj.solve_part1()
+
 def test_field1():
     data = ['.#..#',
             '.....',
             '#####',
             '....#',
             '...##']
-    assert ((3,4), 8) == main.solve_part1(data)
+    assert ((3,4), 8) == solve(data)
 
 def test_field2():
     data = ['......#.#.', '#..#.#....',
@@ -18,7 +23,7 @@ def test_field2():
             '.##.#..###',
             '##...#..#.',
             '.#....####',]
-    assert ((5,8), 33) == main.solve_part1(data)
+    assert ((5,8), 33) == solve(data)
 
 
 def test_field3():
@@ -32,7 +37,7 @@ def test_field3():
             '..##....##',
             '......#...',
             '.####.###.']
-    assert ((1,2), 35) == main.solve_part1(data)
+    assert ((1,2), 35) == solve(data)
 
 
 def test_field4():
@@ -46,7 +51,7 @@ def test_field4():
             '#..#.#.###',
             '.##...##.#',
             '.....#.#..',]
-    assert ((6,3), 41) == main.solve_part1(data)
+    assert ((6,3), 41) == solve(data)
 
 def test_field5():
     data = ['.#..##.###...#######',
@@ -70,4 +75,4 @@ def test_field5():
             '#.#.#.#####.####.###',
             '###.##.####.##.#..##',]
 
-    assert ((11,13), 210) == main.solve_part1(data)
+    assert ((11,13), 210) == solve(data)
