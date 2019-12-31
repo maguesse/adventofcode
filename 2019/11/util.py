@@ -1,0 +1,1 @@
+/home/mathieuaguesse/Dev/mine/python/adventofcode/.tmpl/util.py
